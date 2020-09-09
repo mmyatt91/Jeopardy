@@ -7,7 +7,7 @@ let categories = []; // how categories, the main data structure, should be displ
 
 //STEP ONE: What happens when the page loads? 
 // Fetch data from the categories API and return as an array
-async function getCategories(){
+async function getCategories() {
     let response = await axios.get(`${rootURL}categories?count=100`);
     let catIds = response.data.map(cat => cat.id);
     return _.sampleSize(catIds, numCats); // which will return a collection (array) of categories 
@@ -25,7 +25,7 @@ async function getClues(catId) {
         showing: null // displays nothing
     }));
 
-    return {title: cat.title, clues} // returns the title of the category, and category's clues
+    return {title: category.title, clues} // returns the title of the category, and category's clues
 }
 
 // Create Game Board, using HTML Table #jeopardy
@@ -35,7 +35,7 @@ async function getClues(catId) {
  *   each with a question for each category in a <td>
  *   (initally, just show a "?" where the question/answer would go.)
  */
-async function jeopardyGB () {
+async function populateGameBoard () {
     $("#jeopardy thead").empty() // Removes header text
     let $tr = $("<tr>"); // Set for the table row
     for (let catIdx = 0; catIdx < numCats; catIdx++) { // iterates thru each category index
@@ -62,16 +62,39 @@ async function setupStart() {
         categories.push(await getClues(catId)) // push the data from the getClues function into an empty array
     }
 
-    jeopardyGB(); // populate the game board with fetched data
+    populateGameBoard(); // populate the game board with fetched data
 }
 
 
 // STEP TWO: What happens when I click one of the category’s questions?
+function handleClick (e) {
+    let id = e.target.id; // Sets event target
+    let [catId, clueId] = id.split("-"); // Sets catId & clueId to 
+    let clue = categories[catId].clues[clueId]; // Sets clue to the correct index
 
+    let msg;
 
+    if(!clue.showing){ // If null, show question and set .showing to question
+        msg = clue.question;
+        clue.showing = "question";
+    } else if (clue.showing === "question"){ // If "question", show answer, and set .showing to answer
+        msg = clue.answer;
+        clue.showing = "answer"
+    } else { // If "answer", ignore, and return nothing
+        return;
+    }
+    $(`#${catId}-${clueId}`).html(msg); // Text cell is updated to display correct msg
+
+}
 
 
  // STEP THREE: What happens when I click the “Restart Game” button?
 
  // Add on click to restart button
-// $("#restart").on("click", setupAndStart);
+     $("#restart").on("click", setupStart); // Puts an event listener on the restart button
+
+// Set up Page Load
+    $(async function () {
+        setupStart(); // calls the setupStart function
+        $("#jeopardy").on("click", "td", handleClick); // Puts an event listerner on the td when clicked
+    });
