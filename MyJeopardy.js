@@ -39,7 +39,7 @@ async function populateGameBoard () {
     $("#jeopardy thead").empty() // Removes header text
     let $tr = $("<tr>"); // Set for the table row
     for (let catIdx = 0; catIdx < numCats; catIdx++) { // iterates thru each category index
-        $tr.append($("<td>").text(categories[catIdx].title)) // append the category's title to the header cell
+        $tr.append($("<th>").text(categories[catIdx].title)) // append the category's title to the header cell
     }
     $("#jeopardy thead").append($tr); // appends table row to the header content of the page
 
