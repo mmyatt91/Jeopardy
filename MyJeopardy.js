@@ -25,7 +25,7 @@ async function getClues(catId) {
         showing: null // displays nothing
     }));
 
-    return {title: cat.title, clues} // returns the title of the category, and category's clues
+    return {title: category.title, clues} // returns the title of the category, and category's clues
 }
 
 // Create Game Board, using HTML Table #jeopardy
@@ -35,7 +35,7 @@ async function getClues(catId) {
  *   each with a question for each category in a <td>
  *   (initally, just show a "?" where the question/answer would go.)
  */
-async function jeopardyGB () {
+async function populateGameBoard () {
     $("#jeopardy thead").empty() // Removes header text
     let $tr = $("<tr>"); // Set for the table row
     for (let catIdx = 0; catIdx < numCats; catIdx++) { // iterates thru each category index
@@ -62,7 +62,7 @@ async function setupStart() {
         categories.push(await getClues(catId)) // push the data from the getClues function into an empty array
     }
 
-    jeopardyGB(); // populate the game board with fetched data
+    populateGameBoard(); // populate the game board with fetched data
 }
 
 
@@ -75,3 +75,6 @@ async function setupStart() {
 
  // Add on click to restart button
 // $("#restart").on("click", setupAndStart);
+
+// start the game on initial page load
+setupStart()
