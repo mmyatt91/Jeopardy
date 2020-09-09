@@ -91,7 +91,6 @@ function handleClick (e) {
  // STEP THREE: What happens when I click the “Restart Game” button?
 
  // Add on click to restart button
-<<<<<<< HEAD
      $("#restart").on("click", setupStart); // Puts an event listener on the restart button
 
 // Set up Page Load
@@ -99,9 +98,3 @@ function handleClick (e) {
         setupStart(); // calls the setupStart function
         $("#jeopardy").on("click", "td", handleClick); // Puts an event listerner on the td when clicked
     });
-=======
-// $("#restart").on("click", setupAndStart);
-
-// start the game on initial page load
-setupStart()
->>>>>>> 0ceb5dad9beaacd1d92d4c6b8ac4e51e704408ed
