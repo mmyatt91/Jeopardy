@@ -36,3 +36,16 @@
   td:hover {
     cursor: pointer;
   }
+
+  #loader {
+    position: absolute;
+    color: darkgoldenrod;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+    font-size: 24px;
+    background-color: #060ce9;
+    opacity: 1;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+  }

@@ -98,3 +98,8 @@ function handleClick (e) {
         setupStart(); // calls the setupStart function
         $("#jeopardy").on("click", "td", handleClick); // Puts an event listerner on the td when clicked
     });
+
+// Display loading screen while API requests are occurring.
+    $(window).load("rootURL", function() {
+        $("#loader").fadeOut(6000)
+    })
